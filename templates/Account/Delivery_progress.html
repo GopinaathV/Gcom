@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+{% load static%}
+
+{% include 'Alerts.html' %}
+<style>
+.stepper-wrapper {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.stepper-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+}
+
+.stepper-item::before {
+  position: absolute;
+  content: "";
+  border-bottom: 2px solid #ccc;
+  width: 100%;
+  top: 50px;
+  left: -50%;
+  z-index: 2;
+}
+
+.stepper-item::after {
+  position: absolute;
+  content: "";
+  border-bottom: 2px solid #ccc;
+  width: 100%;
+  top: 50px;
+  left: 50%;
+  z-index: 2;
+}
+
+.stepper-item .step-counter {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: darkgrey;
+  margin-bottom: 6px;
+}
+
+.stepper-item.active {
+  font-weight: bold;
+}
+
+.stepper-item.completed .step-counter {
+  background-color: #0dd157;
+}
+
+.stepper-item.completed::after {
+  position: absolute;
+  content: "";
+  border-bottom: 5px solid #0dd157;
+  width: 100%;
+  top: 50px;
+  left: 50%;
+  z-index: 3;
+}
+
+.stepper-item:first-child::before {
+  content: none;
+}
+.stepper-item:last-child::after {
+  content: none;
+}
+
+.check{
+  display: inline-block;
+  transform: rotate(45deg);
+  height: 24px;
+  width: 12px;
+  border-bottom: 7px solid white;
+  border-right: 7px solid white;
+}
+</style>
+<div class="container card overflow-hidden" style="margin-top: 30px;margin-bottom: 30px;">
+    <h4 class="font-weight-bold py-3 mb-4" style="
+    font-size: 40px;
+    color: grey;
+    text-align: center;
+">Delivery status</h4>
+<div class="stepper-wrapper">
+
+  <div class="stepper-item {% if order_status %}completed{% else %}'' {% endif %}">
+    <div class="step-counter"><div class="check"></div></div>
+    <div class="step-name">Ordered</div>
+  </div>
+
+
+  <div class="stepper-item {% if payment_status %}completed{% else %}'' {% endif %}">
+    <div class="step-counter"><div class="check"></div></div>
+    <div class="step-name">Payment</div>
+  </div>
+  <div class="stepper-item {% if out_for_delivery %}completed{% else %}'' {% endif %}">
+    <div class="step-counter"><div class="check"></div></div>
+    <div class="step-name">Out for delivery</div>
+  </div>
+  <div class="stepper-item">
+    <div class="step-counter {% if delivered %}completed{% else %}'' {% endif %}"><div class="check"></div></div>
+    <div class="step-name">Delivered</div>
+  </div>
+</div>
+</div>
+{% endblock %}

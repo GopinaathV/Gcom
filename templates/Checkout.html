@@ -1,0 +1,115 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+
+
+<div class="container">
+<div class="row" style="margin: 30px;">
+	<div class="col-lg-8" style="padding: 50px;">
+    <div class="card mb-4">
+      <div class="card-body">
+      <h4 class="card-title mb-3">Delivery info</h4>
+
+<!--	  <div class="form-row">-->
+<!--			<div class="form-group col-sm-6">-->
+<!--				<label class="js-check box">-->
+<!--					<input type="radio" name="dostavka" value="option1" checked="">-->
+<!--					<h6 class="title">Standart delivery</h6>-->
+<!--					<p class="text-muted">Free by airline within 20 days</p>-->
+<!--				</label> &lt;!&ndash; js-check.// &ndash;&gt;-->
+<!--			</div>-->
+<!--			<div class="form-group col-sm-6">-->
+<!--				<label class="js-check box active">-->
+<!--					<input type="radio" name="dostavka" value="option1">-->
+<!--					<h6 class="title">Fast delivery</h6>-->
+<!--					<p class="text-muted">Extra 20$ will be charged </p>-->
+<!--				</label> &lt;!&ndash; js-check.// &ndash;&gt;-->
+<!--			</div>-->
+<!--		</div> &lt;!&ndash; form row.// &ndash;&gt;-->
+    <form method="POST" action="{% url 'place_order'%}">
+	{% csrf_token %}
+	<div class="form-row">
+		<div class="col form-group">
+			<label>First n ame</label>
+		  	<input type="text" class="form-control" placeholder="" value="{{user.first_name}}" name="first_name" required>
+		</div> <!-- form-group end.// -->
+		<div class="col form-group">
+			<label>Last name</label>
+		  	<input type="text" class="form-control" placeholder="" value="{{user.last_name}}" name="last_name" required>
+		</div> <!-- form-group end.// -->
+	</div> <!-- form-row end.// -->
+
+	<div class="form-row">
+		<div class="col form-group">
+			<label>Email</label>
+		  	<input type="email" class="form-control" placeholder="" value="{{user.email}}" name="email" required>
+		</div> <!-- form-group end.// -->
+		<div class="col form-group">
+			<label>Phone</label>
+		  	<input type="text" class="form-control" placeholder="" value="{{user.phone_no}}" name="phone" required>
+		</div> <!-- form-group end.// -->
+	</div> <!-- form-row end.// -->
+
+	<div class="form-row">
+		<div class="form-group col-md-6">
+		  <label>Country</label>
+		  <select id="inputState" class="form-control" name="country" required>
+		    <option> Choose...</option>
+		      <option>Uzbekistan</option>
+		      <option>Russia</option>
+		      <option selected="">India</option>
+		      <option>USA</option>
+		      <option>Afganistan</option>
+		  </select>
+		</div> <!-- form-group end.// -->
+		<div class="form-group col-md-6">
+		  <label>City</label>
+		  <input type="text" class="form-control" name="city" required>
+		</div> <!-- form-group end.// -->
+	</div>
+	<div class="row">
+		<div class="form-group col-md-6">
+			<label>State</label>
+		  <input type="text" class="form-control" name="state" required>
+		</div>
+		<div class="form-group col-md-6">
+           <label>Pin number</label>
+		  <input type="text" class="form-control">
+		</div>
+	</div>	  <!-- form-row.// -->
+	<div class="form-group ">
+		<label>Address</label>
+       <textarea class="form-control" rows="2" name="address_line" required></textarea>
+    </div> <!-- form-group// -->
+
+      </div> <!-- card-body.// -->
+    </div>
+	</div>
+	<div class="col-lg-4" style="padding-top: 50px;">
+    <div class="card">
+    <div class="card-body">
+		<dl class="dlist-align">
+		  <dt>Total price:</dt>
+		  <dd class="text-right">Rs.{{total}}</dd>
+		</dl>
+		<dl class="dlist-align">
+		  <dt>Tax:</dt>
+		  <dd class="text-right text-gray-light">+ Rs.{{tax}}</dd>
+		</dl>
+		<dl class="dlist-align">
+		  <dt>Total:</dt>
+		  <dd class="text-right text-dark b"><strong>Rs.{{grand_total}}</strong></dd>
+		</dl>
+		<hr>
+<!--		<p class="text-center mb-3">-->
+<!--&lt;!&ndash;			<img src="../images/misc/payments.png" height="26">&ndash;&gt;-->
+<!--		</p>-->
+		<button type="submit" class="btn btn-outline-success btn-block"> Proceed </button>
+</div> <!-- card-body.// -->
+    </div>
+	</div>
+</form>
+</div>
+
+</div>
+{% endblock %}

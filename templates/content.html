@@ -1,0 +1,123 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+
+
+
+
+
+<section class="section-content">
+
+<div class="container" style="display: flex;">
+
+	<div class="container" style="flex: 25%;">
+		<div class="card mb-3" style="margin-top: 1rem;">
+	<div class="card-body">
+		<h5 class="card-title">Product type</h5>
+		<ul class="list-menu">
+			{% for category,cnt in categories.items %}
+			<li><a href="{{ category.get_url }}">{{category.category_name}} <span class="badge badge-pill badge-light float-right">{{cnt}}</span> </a></li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+
+	</div>
+
+	<div class="container">
+
+<header class="section-heading">
+	<h3 class="section-title">Search result</h3>
+    <div class="form-inline">
+			<span class="mr-md-auto"><b>{{ products_count }}</b> items found </span>
+
+		</div>
+
+</header>
+
+<div class="row">
+	{% for product in products %}
+	<div class="col-md-3">
+		<div href="#" class="card card-product-grid">
+			<a href="#" class="img-wrap"> <img src="{{ product.product_images.url }}"> </a>
+			<figcaption class="info-wrap">
+				<a href="{{ product.get_url }}" class="title">{{product.product_name}}</a>
+				<div class="rating-wrap">
+					{% if product.product_rating >= 1%}
+				<span><i class="fa fa-star" style="color: #ffb503;"> </i></span>
+				{% else %}
+				<span><i class="fa fa-star" style="color: grey;"> </i></span>
+				{% endif %}
+				{% if product.product_rating >= 2%}
+				<span><i class="fa fa-star" style="color: #ffb503;"> </i></span>
+				{% else %}
+				<span><i class="fa fa-star" style="color: grey;"> </i></span>
+				{% endif %}
+				{% if product.product_rating >= 3%}
+				<span><i class="fa fa-star" style="color: #ffb503;"> </i></span>
+				{% else %}
+				<span><i class="fa fa-star" style="color: grey;"> </i></span>
+				{% endif %}
+				{% if product.product_rating >= 4%}
+				<span><i class="fa fa-star" style="color: #ffb503;"> </i></span>
+				{% else %}
+				<span><i class="fa fa-star" style="color: grey;"> </i></span>
+				{% endif %}
+				{% if product.product_rating >= 5%}
+				<span><i class="fa fa-star" style="color: #ffb503;"> </i></span>
+				{% else %}
+				<span><i class="fa fa-star" style="color: grey;"> </i></span>
+				{% endif %}
+
+					{% if product.total_reviews %}
+					<span class="label-rating text-muted"> {{product.total_reviews}} reviews</span>
+				    {% else %}
+					<span class="label-rating text-muted"></span>
+					{% endif %}
+				</div>
+				<div class="price mt-1">Rs.{{product.product_price}}</div> <!-- price-wrap.// -->
+			</figcaption>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+
+
+
+
+<div class="pagination"
+	 style="
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;"
+>
+ {% if products.has_other_pages %}
+	{% if products.has_previous %}
+  <a href="?page={{products.previous_page_number}}">&laquo;</a>
+	{% else %}
+  <a href="#" class=" disabled ">&laquo;</a>
+	{% endif %}
+	{% for i in products.paginator.page_range %}
+	{% if products.number == i %}
+       <a href="#" class="active">{{i}}</a>
+    {% else%}
+	   <a  href="?page={{i}}">{{i}}</a>
+	{% endif %}
+	{% endfor %}
+  {% if products.has_next %}
+  <a href="?page={{products.next_page_number}}">&raquo;</a>
+	{% else %}
+  <a href="#" class=" disabled ">&raquo;</a>
+	{% endif %}
+ {% endif %}
+</div>
+
+
+
+</div>
+
+</div>
+
+</section>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+ <div class="container card "style="
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding: 50px;
+">
+    <p>
+       <h3>Payment Successful<div class="check" style="display: inline-block;
+  transform: rotate(45deg);
+    margin-left: 15px;
+  height: 24px;
+  width: 12px;
+  border-bottom: 7px solid #78b13f;
+  border-right: 7px solid #78b13f;"></div></h3>
+      <p>Thank you for your purchase!</p>
+      <p> If you have any questions, please let us know through emails.</p>
+    </p>
+   <div class="row">
+       <div class="col-md-8">
+           <table class="table table-hover">
+           <tbody>
+           {% for ordered_product in ordered_products %}
+			<tr>
+				<td width="65">
+					<img src="{{ordered_product.product.product_images.url}}" class="img-xs border">
+				</td>
+				<td>
+					<p class="title mb-0">{{ordered_product.product.product_name}} </p>
+					<var class="price text-muted">Rs.{{ordered_product.product.product_price}}</var>
+				</td>
+				<td> Quantity <br> {{ordered_product.quantity}} </td>
+				{% for item in ordered_product.variations.all %}
+				<td> {{ item.variation_category | capfirst }} <br> {{ item.variation_value | capfirst }} </td>
+				{% endfor %}
+
+				<td> Brand <br> {{ordered_product.product.brand.name}} </td>
+			</tr>
+        {% endfor %}
+           </tbody>
+           </table>
+       </div>
+       <div class="col-md-4">
+           <div class="card">
+    <div class="card-body">
+		<dl class="dlist-align">
+		  <dt>Amount paid:</dt>
+		  <dd class="text-right">Rs.{{total}}</dd>
+		</dl>
+		<dl class="dlist-align">
+		  <dt>Tax:</dt>
+		  <dd class="text-right text-gray-light">+ Rs.{{tax}}</dd>
+		</dl>
+		<dl class="dlist-align">
+		  <dt>Total amount paid:</dt>
+		  <dd class="text-right text-dark b"><strong>Rs.{{grand_total}}</strong></dd>
+		</dl>
+
+</div>
+
+
+
+
+</div>
+       </div>
+   </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,208 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<section class="section-intro padding-y-sm">
+<div class="container">
+
+<div class="intro-banner-wrap">
+	<img src="{% static 'images/banners/5875457.jpg'%}" class="img-fluid rounded" style="
+    width: 100%;
+    height: 336px;
+    object-fit:cover;
+    object-position:60% 40%;
+">
+</div>
+
+</div> <!-- container //  -->
+</section>
+<!-- ========================= SECTION INTRO END// ========================= -->
+
+
+<!-- ========================= SECTION FEATURE ========================= -->
+<!--<section class="section-content padding-y-sm">-->
+<!--<div class="container">-->
+<!--<article class="card card-body">-->
+
+
+<!--<div class="row">-->
+<!--	<div class="col-md-4">-->
+<!--		<figure class="item-feature">-->
+<!--			<span class="text-primary"><i class="fa fa-2x fa-truck"></i></span>-->
+<!--			<figcaption class="pt-3">-->
+<!--				<h5 class="title">Fast delivery</h5>-->
+<!--				<p>Dolor sit amet, consectetur adipisicing elit, sed do eiusmod-->
+<!--				tempor incididunt ut labore </p>-->
+<!--			</figcaption>-->
+<!--		</figure> &lt;!&ndash; iconbox // &ndash;&gt;-->
+<!--	</div>&lt;!&ndash; col // &ndash;&gt;-->
+<!--	<div class="col-md-4">-->
+<!--		<figure  class="item-feature">-->
+<!--			<span class="text-primary"><i class="fa fa-2x fa-landmark"></i></span>-->
+<!--			<figcaption class="pt-3">-->
+<!--				<h5 class="title">Creative Strategy</h5>-->
+<!--				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod-->
+<!--				 </p>-->
+<!--			</figcaption>-->
+<!--		</figure> &lt;!&ndash; iconbox // &ndash;&gt;-->
+<!--	</div>&lt;!&ndash; col // &ndash;&gt;-->
+<!--    <div class="col-md-4">-->
+<!--		<figure  class="item-feature">-->
+<!--			<span class="text-primary"><i class="fa fa-2x fa-lock"></i></span>-->
+<!--			<figcaption class="pt-3">-->
+<!--				<h5 class="title">High secured </h5>-->
+<!--				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod-->
+<!--				 </p>-->
+<!--			</figcaption>-->
+<!--		</figure> &lt;!&ndash; iconbox // &ndash;&gt;-->
+<!--	</div> &lt;!&ndash; col // &ndash;&gt;-->
+<!--</div>-->
+<!--</article>-->
+
+<!--</div> &lt;!&ndash; container .//  &ndash;&gt;-->
+<!--</section>-->
+<!-- ========================= SECTION FEATURE END// ========================= -->
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content">
+<div class="container">
+
+<header class="section-heading">
+	<h3 class="section-title">Our products</h3>
+</header><!-- sect-heading -->
+
+
+<div class="row">
+	{% for product in products %}
+	<div class="col-md-3">
+
+		<div href="#" class="card card-product-grid">
+			<a href="#" class="img-wrap"> <img src="{{ product.product_images.url }}"> </a>
+			<figcaption class="info-wrap">
+				<a href="{{ product.get_url }}" class="title">{{product.product_name}}</a>
+				<div class="rating-wrap">
+					{% if product.product_rating >= 1%}
+				<span><i class="fa fa-star" style="color: #ffb503;"> </i></span>
+				{% else %}
+				<span><i class="fa fa-star" style="color: grey;"> </i></span>
+				{% endif %}
+				{% if product.product_rating >= 2%}
+				<span><i class="fa fa-star" style="color: #ffb503;"> </i></span>
+				{% else %}
+				<span><i class="fa fa-star" style="color: grey;"> </i></span>
+				{% endif %}
+				{% if product.product_rating >= 3%}
+				<span><i class="fa fa-star" style="color: #ffb503;"> </i></span>
+				{% else %}
+				<span><i class="fa fa-star" style="color: grey;"> </i></span>
+				{% endif %}
+				{% if product.product_rating >= 4%}
+				<span><i class="fa fa-star" style="color: #ffb503;"> </i></span>
+				{% else %}
+				<span><i class="fa fa-star" style="color: grey;"> </i></span>
+				{% endif %}
+				{% if product.product_rating >= 5%}
+				<span><i class="fa fa-star" style="color: #ffb503;"> </i></span>
+				{% else %}
+				<span><i class="fa fa-star" style="color: grey;"> </i></span>
+				{% endif %}
+
+					{% if product.total_reviews %}
+					<span class="label-rating text-muted"> {{product.total_reviews}} reviews</span>
+				    {% else %}
+					<span class="label-rating text-muted"></span>
+					{% endif %}
+				</div>
+				<div class="price mt-1">Rs.{{product.product_price}}</div> <!-- price-wrap.// -->
+			</figcaption>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+</div>
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<!--<section class="section-content padding-bottom-sm">-->
+<!--<div class="container">-->
+
+<!--<header class="section-heading">-->
+<!--	<a href="#" class="btn btn-outline-primary float-right">See all</a>-->
+<!--	<h3 class="section-title">Recommended</h3>-->
+<!--</header>&lt;!&ndash; sect-heading &ndash;&gt;-->
+
+<!--<div class="row">-->
+<!--	<div class="col-md-3">-->
+<!--		<div href="#" class="card card-product-grid">-->
+<!--			<a href="#" class="img-wrap"> <img src="{% static 'images/items/1.jpg'%}"> </a>-->
+<!--			<figcaption class="info-wrap">-->
+<!--				<a href="#" class="title">Just another product name</a>-->
+<!--				<div class="price mt-1">$179.00</div> &lt;!&ndash; price-wrap.// &ndash;&gt;-->
+<!--			</figcaption>-->
+<!--		</div>-->
+<!--	</div> &lt;!&ndash; col.// &ndash;&gt;-->
+<!--	<div class="col-md-3">-->
+<!--		<div href="#" class="card card-product-grid">-->
+<!--			<a href="#" class="img-wrap"> <img src="{% static 'images/items/2.jpg'%}"> </a>-->
+<!--			<figcaption class="info-wrap">-->
+<!--				<a href="#" class="title">Some item name here</a>-->
+<!--				<div class="price mt-1">$280.00</div> &lt;!&ndash; price-wrap.// &ndash;&gt;-->
+<!--			</figcaption>-->
+<!--		</div>-->
+<!--	</div> &lt;!&ndash; col.// &ndash;&gt;-->
+<!--	<div class="col-md-3">-->
+<!--		<div href="#" class="card card-product-grid">-->
+<!--			<a href="#" class="img-wrap"> <img src="{% static 'images/items/3.jpg'%}"> </a>-->
+<!--			<figcaption class="info-wrap">-->
+<!--				<a href="#" class="title">Great product name here</a>-->
+<!--				<div class="price mt-1">$56.00</div> &lt;!&ndash; price-wrap.// &ndash;&gt;-->
+<!--			</figcaption>-->
+<!--		</div>-->
+<!--	</div> &lt;!&ndash; col.// &ndash;&gt;-->
+<!--	<div class="col-md-3">-->
+<!--		<div href="#" class="card card-product-grid">-->
+<!--			<a href="#" class="img-wrap"> <img src="{% static 'images/items/4.jpg'%}"> </a>-->
+<!--			<figcaption class="info-wrap">-->
+<!--				<a href="#" class="title">Just another product name</a>-->
+<!--				<div class="price mt-1">$179.00</div> &lt;!&ndash; price-wrap.// &ndash;&gt;-->
+<!--			</figcaption>-->
+<!--		</div>-->
+<!--	</div> &lt;!&ndash; col.// &ndash;&gt;-->
+<!--</div> &lt;!&ndash; row.// &ndash;&gt;-->
+
+<!--</div> &lt;!&ndash; container .//  &ndash;&gt;-->
+<!--</section>-->
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+<!-- ========================= SECTION  ========================= -->
+{% if brands_cnt %}
+<section class="section-name bg padding-y-sm">
+
+<div class="container">
+<header class="section-heading">
+	<h3 class="section-title">Our Brands</h3>
+</header><!-- sect-heading -->
+
+<div class="row">
+	{% for brand in brands %}
+	<div class="col-md-2 col-6">
+		<figure class="box item-logo">
+			<a href="#"><img src="{{brand.image.url}}" style="width: 100%;"></a>
+			<figcaption class="border-top pt-2">{{brand.product_total}} Products</figcaption>
+		</figure> <!-- item-logo.// -->
+	</div>
+	{% endfor %}
+</div> <!-- row.// -->
+</div><!-- container // -->
+</section>
+{% endif %}
+{% endblock %}

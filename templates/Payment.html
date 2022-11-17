@@ -1,0 +1,140 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<div class="row container" style="
+    margin-left: auto;
+    margin-right: auto;">
+<div class="col-md-8" style="padding: 50px;">
+		<article class="card order-item mb-4">
+		<header class="card-header">
+			<strong class="d-inline-block mr-3">Order ID: {{order.order_number}}</strong>
+			<span>Order Date: 16 December 2018</span>
+		</header>
+		<div class="card-body">
+			<div class="row">
+				<div class="col-md-8">
+					<h6 class="text-muted">Delivery to</h6>
+					<p>{{order.full_name}}<br>
+					Phone {{order.phone}} Email: {{order.email}} <br>
+			    	Location: {{order.address_line}} <br>
+						{{order.city}}<br>
+						{{order.state}}<br>
+						{{order.country}}
+			 		</p>
+				</div>
+
+			</div> <!-- row.// -->
+		</div> <!-- card-body .// -->
+		<div class="table-responsive">
+		<table class="table table-hover">
+			<tbody>
+			{% for cart_item in cart_items %}
+			<tr>
+				<td width="65">
+					<img src="{{cart_item.product.product_images.url}}" class="img-xs border">
+				</td>
+				<td>
+					<p class="title mb-0">{{cart_item.product.product_name}} </p>
+					<var class="price text-muted">Rs.{{cart_item.product.product_price}}</var>
+				</td>
+				<td> Quantity <br> {{cart_item.quantity}} </td>
+				{% for item in cart_item.variations.all %}
+				<td> {{ item.variation_category | capfirst }} <br> {{ item.variation_value | capfirst }} </td>
+				{% endfor %}
+
+				<td> Brand <br> {{cart_item.product.brand.name}} </td>
+			</tr>
+        {% endfor %}
+		</tbody></table>
+		</div> <!-- table-responsive .end// -->
+		</article> <!-- card order-item .// -->
+
+
+	</div>
+<div class="col-md-4" style="padding-top: 50px;">
+     <div class="card">
+    <div class="card-body">
+		<dl class="dlist-align">
+		  <dt>Total price:</dt>
+		  <dd class="text-right">Rs.{{total}}</dd>
+		</dl>
+		<dl class="dlist-align">
+		  <dt>Tax:</dt>
+		  <dd class="text-right text-gray-light">+ Rs.{{tax}}</dd>
+		</dl>
+		<dl class="dlist-align">
+		  <dt>Total:</dt>
+		  <dd class="text-right text-dark b"><strong>Rs.{{grand_total}}</strong></dd>
+		</dl>
+		<hr>
+<!--		<p class="text-center mb-3">-->
+<!--			<img src="../images/misc/payments.png" height="26">-->
+<!--		</p>-->
+		<button class="btn btn-outline-success btn-block" id="checkout-button"> Confirm Purchase </button>
+		<a href="{% url 'cart'%}" class="btn btn-primary btn-block">Cancel order</a>
+</div>
+
+
+
+
+</div>
+	 </div>
+</div>
+<script type="text/javascript">
+		  function getCookie(name) {
+		let cookieValue = null;
+		if (document.cookie && document.cookie !== '') {
+			const cookies = document.cookie.split(';');
+			for (let i = 0; i < cookies.length; i++) {
+				const cookie = cookies[i].trim();
+				// Does this cookie string begin with the name we want?
+				if (cookie.substring(0, name.length + 1) === (name + '=')) {
+					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+					break;
+				}
+			}
+		}
+		return cookieValue;
+		}
+
+
+      // Create an instance of the Stripe object with your publishable API key
+      var stripe = Stripe('pk_test_51Gw5QaCeyiqTRZoCTKK21CXctwrJUhr9jhfOi1IDgHuyoP1nyruU3Iz9QNUrnH1RdQolMPUusnkDN8P3Eefy6VHD00OKrgG0fC');
+      var checkoutButton = document.getElementById('checkout-button');
+      var url = "{% url 'checkout_final' %}";
+      var orderID = {{order.order_number}};
+      var csrftoken = getCookie('csrftoken');
+
+      checkoutButton.addEventListener('click', function() {
+        fetch(url, {
+          method: 'POST',
+          headers: {
+					"Content-type": "application/json",
+					"X-CSRFToken": csrftoken,
+				},
+		  body: JSON.stringify({
+				orderID: orderID,
+				status: "In-process",
+			}),
+
+        })
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(session) {
+          return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(function(result) {
+          // If `redirectToCheckout` fails due to a browser or network
+          // error, you should display the localized error message to your
+          // customer using `error.message`.
+          if (result.error) {
+            alert(result.error.message);
+          }
+        })
+        .catch(function(error) {
+          console.error('Error:', error);
+        });
+      });
+ </script>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+{% load static%}
+<section class="section-conten padding-y bg">
+
+{% include 'Alerts.html' %}
+<div class="container light-style flex-grow-1 container-p-y">
+
+    <h4 class="font-weight-bold py-3 mb-4">
+      Account settings
+    </h4>
+
+    <div class="card overflow-hidden">
+      <div class="row no-gutters row-bordered row-border-light">
+      {% include "Account/account_side_bar.html" %}
+        <div class="col-md-9">
+           <div class="tab-pane" >
+              <div class="card-body pb-2">
+					<label class="text" style="color: grey;font-size: 25px;">Total purchased & cart items</label>
+				    <div class="row" style="display: flex;justify-content: center;">
+
+			    <div class="col-lg-4" style="margin:20px;background-color: #faf9f7;border-radius: 15px;padding: 30px;">
+
+					<div class="box-part text-center">
+                        <i style="font-size:30px;color: #ffb503;" class="fa fa-star"></i>
+                        <div class="title">
+							<label class="text" style="
+    font-size: 40px;
+    color: blue;
+    margin-bottom: 0px;
+    font-weight: bolder;
+">{{orders_cnt}}</label>
+						</div>
+						<span style="
+    font-weight: 600;
+    color: grey;
+">Successful orders</span>
+
+
+
+					 </div>
+
+
+              </div>
+				<div class="col-lg-4" style="margin:20px;background-color: #faf9f7;border-radius: 15px;padding: 30px;">
+
+					<div class="box-part text-center">
+                        <i style="font-size:30px;color: grey;" class="fa fa-star"></i>
+                        <div class="title">
+							<label class="text" style="
+    font-size: 40px;
+    color: blue;
+    margin-bottom: 0px;
+    font-weight: bolder;
+">{{cart_cnt}}</label>
+						</div>
+						<span style="
+    font-weight: 600;
+    color: grey;
+">In cart</span>
+
+
+
+					 </div>
+
+
+              </div>
+            </div>
+                    <table class="table table-hover">
+           <tbody>
+           {% for ordered_product in orders %}
+			<tr>
+				<td width="65">
+					<img src="{{ordered_product.product.product_images.url}}" class="img-xs border">
+				</td>
+				<td>
+					<a class="title mb-0" href="{% url 'delivery' ordered_product.order.order_number %}">{{ordered_product.product.product_name}} </a><br>
+					<var class="price text-muted">Rs.{{ordered_product.product.product_price}}</var>
+				</td>
+				<td> Quantity <br> {{ordered_product.quantity}} </td>
+				{% for item in ordered_product.variations.all %}
+				<td> {{ item.variation_category | capfirst }} <br> {{ item.variation_value | capfirst }} </td>
+				{% endfor %}
+
+				<td> Brand <br> {{ordered_product.product.brand.name}} </td>
+			    <td>
+					<td> Payment status <br> {{ordered_product.payment.status}} </td>
+				</td>
+            </tr>
+        {% endfor %}
+           </tbody>
+           </table>
+			</div>
+
+            </div>
+          </div>
+    </div>
+        </div>
+      </div>
+    </div>
+
+
+</div>
+
+
+</section>
+
+{% endblock %}
+
+
+
+
+
+
